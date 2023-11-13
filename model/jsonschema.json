@@ -1,0 +1,25 @@
+{
+    "title": "Sample Board",
+    "position": 1,
+    "color": "#ffffff",
+    "rows": [
+      {
+        "title": "Row 1",
+        "position": 1,
+        "cards": [
+          {
+            "title": "Card 1",
+            "description": "This is a sample card",
+            "images": "http://example.com/sample.jpg",
+            "dueDate": "2023-08-01T00:00:00.000Z"
+          }
+        ]
+      }
+    ],
+    "visability": true,
+    "bgimage": "http://example.com/bg.jpg",
+    "imageurl": "http://example.com/image.jpg",
+    "type": "Sample Type",
+    "viewcount": 0
+  }
+  

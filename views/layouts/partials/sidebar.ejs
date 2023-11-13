@@ -1,0 +1,192 @@
+<style>
+    .greenactive {
+        background-color: #2dce89;
+        color: white;
+    }
+</style>
+<button id="sidenavtoggle" class="sidenavtoggle"> <i class="bi bi-caret-right sidenavtoggle"></i> </button>
+
+<div class="sidebar side-hidden">
+    <button id="newtask" class="w-full mt-2 create-task-btn p-3 rounded-lg bg-blue-400 text-white">Create task </button>
+
+    <div id="task-create-card" class=" shadow  white-black task-create  mt-2 p-3 rounded-lg">
+        <div class="flex justify-between items-center content-center text-center">
+            <span>Create a new task</span>
+            <button id="task-remove-card"> <i class="bi bi-x text-xl"></i></button>
+        </div>
+        <br>
+
+        <div class="bord-content">
+            <form action="" method="get">
+                <label for="title">Title</label> <br>
+                <input class="white-black border-b w-full rounded-lg p-2" type="text" placeholder="Enter card title">
+                <br>
+                <br>
+                <span>Task Type</span><br>
+                <div class="new-card-tags">
+                    <span
+                        class="bg-yellow-200 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full ">Meeting</span>
+
+                    <span
+                        class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full ">Project</span>
+
+                    <i class="bi text-xl bi-plus-circle-dotted"></i>
+
+                </div>
+                <br>
+                <span>Task Details</span>
+                <div class="details mt-2 text-xs flex text-center items-center content-center">
+                    <i class="bi text-lg bi-clock"></i>
+                    <span class="ml-1 bg-grey-300">
+                        Sunday, Nov 6(10-00am - 12pm)
+                    </span>
+                </div>
+                <div class="flex mt-2 text-center items-center content-center">
+                    <i class="bi text-lg bi-file-text"></i>
+
+                    <textarea class=" white-black rounded-lg ml-1 textarea-remove" name="description" id="" cols="30"
+                        rows="1" placeholder="Enter task discription "></textarea>
+                </div>
+
+                <br>
+                <button class="w-full create-task-btn p-3 rounded-lg bg-blue-400 text-white">Create task </button>
+
+
+            </form>
+        </div>
+        <br>
+
+    </div>
+
+
+    <!-- <div class="current-task white-black shadow  mt-2 p-3 rounded-lg">
+        <section class="todays task">
+            <div class="flex justify-between">
+                <span>Today Tasks</span>
+                <i class="bi bi-three-dots"></i>
+            </div>
+            <br>
+            <div class="tasks">
+                <div class="flex items-center border p-3 rounded-lg mb-4">
+                    <input id="country-option-1" type="radio" name="countries" value="USA"
+                        class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
+
+                    <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 ">Go
+                        parking</label>
+                </div>
+            </div>
+        </section>
+    </div> -->
+    <div class="  p-3 rounded mt-4">
+        <div class="flex flex-col">
+            <div class="grid grid-cols-2 gap-2 w-full">
+                <a href="/home/reminder/today" id="tcalendar" class="task-link border w-full h-17 p-3 rounded-lg">
+                    <div class="flex mt-1 justify-between">
+                        <span class=" w-7 h-7 text-center flex justify-center rounded-full bg-blue-500 text-white"><i
+                                style="margin-top: 0.2em;" class="bi  text-sm bi-calendar-date"></i>
+                        </span>
+                        <span class="font-medium">0</span>
+                    </div>
+                    <span class="mb-5 text-sm font-medium">Today</span>
+
+
+                </a>
+                <a href=" /home/reminder/all" id="all" class="task-link all border w-full h-18 p-3 rounded-lg">
+                    <div class="flex mt-1 justify-between">
+                        <span class=" w-7  text-center flex justify-center rounded-full bg-gray-400 text-white">
+                            <i class=" mb-1 bi bi-inbox"></i>
+
+                        </span>
+                        <span class="font-medium">0</span>
+                    </div>
+                    <span class="mb-5 text-sm ">All</span>
+
+
+                </a>
+                <a href="/home/reminder/schedule" class="task-link schedules border w-full h-18 p-3 rounded-lg">
+                    <div class="flex mt-1 justify-between">
+                        <span class=" w-7  text-center flex justify-center rounded-full bg-red-500 text-white">
+                            <i class="bi  mb-1 bi-calendar-week"></i>
+
+                        </span>
+                        <span class="font-medium">0</span>
+                    </div>
+                    <span class="mb-5 text-sm ">Scheduled</span>
+
+
+                </a>
+                <a href="/home/reminder/completed" id="ccalendar"
+                    class="ccalendar task-link border w-full h-18 p-3 rounded-lg">
+                    <div class="flex mt-1 justify-between">
+                        <span class=" w-7  text-center flex justify-center rounded-full bg-green-500 text-white">
+                            <i class="bi mb-1 bi-calendar2-check"></i>
+                        </span>
+                        <span class="font-medium">0</span>
+                    </div>
+                    <span class="mb-5 text-sm ">Completed</span>
+
+
+                </a>
+
+            </div>
+            <div class="notes p-3 mt-2 text-center felx justify-center  h-16  w-full border rounded-md">
+                <span class="text-2xl text-gray-400">Notes </span>
+
+            </div>
+        </div>
+        <div class="list content-center items-center mt-1 flex justify-between">
+            <span>
+                List
+
+            </span>
+            <button class=""> <i class="bi bi-plus text-2xl"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Get the current URL path
+        var path = window.location.pathname; var calendar = $('.calendar')
+        var today = $('.today')
+        var tcalendar = $('#tcalendar')
+        var all = $('.all')
+        var ccalendar = $('#ccalendar')
+        var schedules = $('.schedules')
+
+
+        // alert(path);
+        $('.task-link').each(function () {
+            var href = $(this).attr('href');
+            if (path === href) {
+                $(this).find('i').addClass('bi-fill');
+            }
+            if (path === '/home/reminder/today') {
+                tcalendar.addClass('bg-blue-600  text-white border-none ')
+                tcalendar.find('i').removeClass('bi-calendar-date')
+                tcalendar.find('i').addClass('bi-calendar-date-fill')
+
+
+            }
+            if (path === '/home/reminder/all') {
+                all.addClass('bg-gray-500  text-white border-none')
+                tcalendar.find('i').removeClass('bi-calendar-date')
+                tcalendar.find('i').addClass('bi-calendar-date-fill')
+
+            }
+            if (path === '/home/reminder/schedule') {
+                schedules.addClass('bg-red-600  text-white border-none')
+                tcalendar.find('i').removeClass('bi-calendar-date')
+                tcalendar.find('i').addClass('bi-calendar-date-fill')
+
+            }
+            if (path === '/home/reminder/completed') {
+                ccalendar.addClass('bg-green-600 text-white border-none')
+                tcalendar.find('i').removeClass('bi-calendar-date')
+                tcalendar.find('i').addClass('bi-calendar-date-fill')
+
+            }
+        });
+    });
+
+</script>

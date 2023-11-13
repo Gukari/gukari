@@ -1,0 +1,1618 @@
+<style>
+
+  
+    .navactive {
+        background-color: rgba(0, 132, 255, 0.876);
+        color: white;
+    }
+    .remove-vid{
+        margin-left: 27em;
+    }
+
+
+    .nav-link:hover {
+        background-color: rgba(0, 132, 255, 0.968);
+        color: white;
+    }
+    .custom-file-upload {
+        display: inline-block;
+    padding: 43px 67px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+    .nav-icons {
+        font-size: 1.3em;
+    }
+    #videoContainer1 {
+    position: relative;
+    width: 100%;
+    height: 0;
+    max-width: 24em;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio, adjust as needed */
+    background-color: #000;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.video-container1 {
+  position: relative;
+  /* width: 90%; */
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  margin-inline: auto;
+  background-color: black;
+}
+
+.video-container1.theater,
+.video-container1.full-screen {
+  max-width: initial;
+  width: 100%;
+}
+
+.video-container1.theater {
+  max-height: 90vh;
+}
+
+.video-container1.full-screen {
+  max-height: 100vh;
+}
+
+video {
+  width: 100%;
+}
+
+.video-controls-container1 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+
+
+.video-container1:hover .video-controls-container1,
+.video-container1:focus-within .video-controls-container1,
+.video-container1.paused1 .video-controls-container1 {
+  opacity: 1;
+}
+
+.video-controls-container1 .controls {
+  display: flex;
+  gap: .5rem;
+  padding: .25rem;
+  align-items: center;
+}
+
+.video-controls-container1 .controls button {
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: .85;
+  transition: opacity 150ms ease-in-out;
+}
+
+.video-controls-container1 .controls button:hover {
+  opacity: 1;
+}
+
+.video-container1.paused1 .pause-icon {
+  display: none;
+}
+
+.video-container1:not(.paused1) .play-icon {
+  display: none;
+}
+
+.video-container1.theater .tall {
+  display: none;
+}
+
+.video-container1:not(.theater) .wide {
+  display: none;
+}
+
+.video-container1.full-screen .open {
+  display: none;
+}
+
+.video-container1:not(.full-screen) .close {
+  display: none;
+}
+
+.volume-high-icon,
+.volume-low-icon,
+.volume-muted-icon {
+  display: none;
+}
+
+.video-container1[data-volume-level="high"] .volume-high-icon {
+  display: block;
+}
+
+.video-container1[data-volume-level="low"] .volume-low-icon {
+  display: block;
+}
+
+.video-container1[data-volume-level="muted"] .volume-muted-icon {
+  display: block;
+}
+
+.volume-container1 {
+  display: flex;
+  align-items: center;
+}
+
+.volume-slider1 {
+  width: 0;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: width 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.volume-container1:hover .volume-slider1,
+.volume-slider1:focus-within {
+  width: 100px;
+  transform: scaleX(1);
+}
+
+.duration-container1 {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  flex-grow: 1;
+}
+
+.video-container1.captions1 .captions1-btn1 {
+  border-bottom: 3px solid #f54251;
+}
+
+.video-controls-container1 .controls button.wide-btn {
+  width: 50px;
+}
+
+.timeline1-container1 {
+  height: 7px;
+  margin-inline: .5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.timeline1 {
+  height: 3px;
+  width: 100%;
+  position: relative
+}
+
+.timeline1::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: calc(100% - var(--preview-position) * 100%);
+  background-color: rgb(150, 150, 150);
+  display: none;
+}
+
+.timeline1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: calc(100% - var(--progress-position) * 100%);
+  background-color: red;
+}
+
+.timeline1 .thumb-indicator {
+  --scale: 0;
+  position: absolute;
+  transform: translateX(-50%) scale(var(--scale));
+  height: 200%;
+  top: -50%;
+  left: calc(var(--progress-position) * 100%);
+  background-color: red;
+  border-radius: 50%;
+  transition: transform 150ms ease-in-out;
+  aspect-ratio: 1 / 1;
+}
+
+.timeline1 .preview-img1 {
+  position: absolute;
+  height: 80px;
+  aspect-ratio: 16 / 9;
+  top: -1rem;
+  transform: translate(-50%, -100%);
+  left: calc(var(--preview-position) * 100%);
+  border-radius: .25rem;
+  border: 2px solid white;
+  display: none;
+}
+
+.thumbnail-img1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.video-container1.scrubbing .thumbnail-img1 {
+  display: block;
+}
+
+.video-container1.scrubbing .preview-img1,
+.timeline1-container1:hover .preview-img1 {
+  display: block;
+}
+
+.video-container1.scrubbing .timeline1::before,
+.timeline1-container1:hover .timeline1::before {
+  display: block;
+}
+
+.video-container1.scrubbing .thumb-indicator,
+.timeline1-container1:hover .thumb-indicator {
+  --scale: 1;
+}
+
+.video-container1.scrubbing .timeline1,
+.timeline1-container1:hover .timeline1 {
+  height: 100%;
+}
+.video-card {
+        width: 100%;
+    }
+    .videoElement{
+      width: 50em;
+    }
+   
+    .liked{
+        color: black;
+    }
+    .reco2{
+      display: flex;
+      
+    }
+    .sugest{
+      width: 30%;
+    }
+    .videow{
+      width: 70%;
+    }
+    @media screen and (max-width: 858px) {
+        .video-card {
+            width: 100%;
+        }
+        .sugest{
+          width: 100%;
+        }
+        .centers {
+           flex-direction: column;
+        }
+        .comments-reco{
+            width: 100%;
+        }
+        .reco2{
+          display: flex;
+          flex-direction: column;
+        }
+        .videow{
+          width: 100%;
+        }
+
+        
+    }
+    .gradient-icon {
+    background: linear-gradient(45deg, #ff0000, #00ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+    .disliked{
+        color: black;
+    }
+    .bg-opacity-50{
+      display: none;
+    }
+    .theathorfull{
+  display: block;
+}
+.fullwidth{
+  width: 100%;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+<!-- Side Navbar -->
+<div id="default-sidebar" class=" bg-theme-transparent flex-shrink-0 sidenav hidden   py-22" style="overflow: scroll;">
+    <div href="" class="flex items-center">
+        <!-- <i class="bi  nav-icons bi-list"></i> -->
+        <!-- <button id="closeside" class="close-side">
+            <i class="text-xl mr-2 bi  nav-icons bi-list"></i>
+        </button> -->
+    
+    </div>
+
+    <!-- Sidebar Content -->
+    <nav style="z-index: 999;" class="text-gray-400 mt-6 ml-1 mr-1 text-sm">
+       
+            <a href="/"
+            class="discover nav-link mb-4  flex items-center p-3  text-gray-500  rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-house-door"></i>
+            <span class="ml-3 navtext">Home</span>
+        </a>
+        <a href="/home/discover"
+            class="discover nav-link mb-4  flex items-center p-3  text-gray-500  rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-globe"></i>
+            <span class="ml-3 navtext">Discover</span>
+        </a>
+        <a href="/home" class="home nav-link mb-4   flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi   nav-icons bi-grid-1x2 "></i>
+            <span class="ml-3 navtext">Dashboard</span>
+        </a>    
+        
+        <!-- <a href="/home/project"
+            class="project nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons  bi-journal-bookmark"></i>
+            <span class="ml-3 navtext">Project</span>
+        </a> -->
+        <a href="/home/analytics"
+        class="analytics nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+        <i class="bi  nav-icons s bi-bar-chart"></i>
+        <span class="ml-3 navtext">Analytics</span>
+    </a>
+        <!-- <a href="/home/board" class="board nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-kanban"></i>
+            <span class="ml-3 navtext">Boards</span>
+        </a> -->
+        <a href="/home/reminder/today"
+            class="reminder nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-check2-square"></i>
+            <span class="ml-3 navtext">Reminder</span>
+        </a>
+        
+        <a href="/home/calendar"
+            class="calendar nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-calendar"></i>
+            <span class="ml-3 navtext">Calendar</span>
+        </a>
+        <% if(currentUser && currentUser.Istudent==true) {%>
+
+        <a href="/home/student/classes" 
+            class="classes nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-book"></i>
+            <span class="ml-3 navtext">Classes</span>
+        </a>
+        <hr>
+        <a href="/home/blog/ap" 
+        class="classes nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+        <i class="bi  nav-icons bi-journal-album"></i>
+        <span class="ml-3 navtext">Ap Courses</span>
+    </a>
+    <%}%>
+      
+
+        <hr>
+        <div class="p-1">
+       <div>
+        <a href="/home/"
+        class="setting items-center nav-link mb-0  flex items-center p-2 text-gray-500 rounded-md  nav-itemz">
+        <i class="bi nav-icons bi-folder-fill"></i>
+
+
+        <span class="ml-2 navtext">Global</span>
+    </a>
+       </div>
+        </div>
+        <hr>
+
+        
+        <div class="">
+            <span class=" nav-link ml-2 font-medium">Explore</span>
+            <div class="flex flex-col">
+                <a href="/home/global"
+                class="setting nav-link mb-0  flex items-center p-2 text-gray-500 rounded-md  nav-itemz">
+                <i class="bi  nav-icons bi-globe"></i>
+
+                <span class="ml-2 navtext">Global</span>
+            </a>
+            <a href="/home/music"
+            class="setting nav-link mb-0  flex items-center p-2 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi bi-music-note-beamed"></i>
+
+            <span class="ml-2 navtext">Music</span>
+        </a>
+
+
+            </div>
+        </div>
+<br>
+    <div class="end">
+
+        <hr>
+
+        <a href="/home/setting"
+            class="setting nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-gear"></i>
+            <span class="ml-3 navtext">Setting</span>
+        </a>
+       
+        <a href="/home/feedback"
+            class="feedback nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-chat-left-text"></i>
+            <span class="ml-3 navtext">Feedback</span>
+        </a>
+        <a href="/home/help"
+            class="help nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-question-circle"></i>
+            <span class="ml-3 navtext">Help</span>
+        </a>
+        <a href="/home/privacy"
+            class="privacy nav-link mb-4  flex items-center p-3 text-gray-500 rounded-md  nav-itemz">
+            <i class="bi  nav-icons bi-shield-lock"></i>
+            <span class="ml-3 navtext">Privacy</span>
+        </a>
+       
+      <hr>
+    </div>
+
+    <br>
+
+        <% if(currentUser && currentUser.Istudent==true) {%>
+
+            <button id="" data-dropdown-toggle="dropdown"
+                class=" student nav-link mb-4 w-full flex items-center p-3 text-gray-500 rounded-md student-nav nav-itemz"
+                type="button">
+                <i class="bi  nav-icons bi-person"></i>
+                <span class="navtext ml-3"> Student</span>
+
+                <svg class="w-4 h-4 " style="margin-left: 6em;" aria-hidden="true" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-full pl-3 pr-3 "
+                style="
+                    position: absolute;
+    inset: 0px auto auto 0px;
+    padding: 1;
+    width: 96%;
+    margin-left: 5px;
+    transform: translate3d(0px, 545.5px, 0px);">
+                <ul class="py-2 text-sm text-gray-700 " aria-labelledby="dropdownDefaultButton">
+                    <li>
+                        <a href="/student/schedule"
+                            class="nav-item block rounded-lg px-4 py-2 hover:bg-gray-100 ">Schedule</a>
+                    </li>
+                    <li>
+                        <a href="/student/grades" class="nav-item block px-4 py-2 hover:bg-gray-100 ">Grades</a>
+                    </li>
+                    <li>
+                        <a href="/student/attendance" class="nav-item block px-4 py-2 hover:bg-gray-100 ">Attendance</a>
+                    </li>
+                    <li>
+                        <a href="/student/calender" class=" nav-item block px-4 py-2 hover:bg-gray-100 ">Calender</a>
+                    </li>
+                </ul>
+            </div>
+            <% } %>
+
+
+                <div class="left text-mode text-center  ">
+
+
+                    <div class="timed bg-gray-300 text-black rounded-md p-2 ">11 AM</div><br>
+                    <div class="w-full bottom-icons justify-around flex flex-wrap">
+
+                        <button id="leftBtn" class=" mb-1 toggleBtn rounded-lg border text-black p-2"><i
+                                class=" bi bi-layout-sidebar"></i></button>
+                        <a href="/synergy/logout" id="toggleBtn"
+                            class="rounded-lg mb-1 text-black border p-2 toggleBtn"> <i
+                                class="bi bi-box-arrow-in-left"></i></a>
+
+                        <a href="/synergy/settings" id="toggleBtn"
+                            class="rounded-lg text-black mb-1 border p-2 toggleBtn"> <i class="bi bi-gear"></i></a>
+                    </div>
+                </div>
+    </nav>
+
+
+</div>
+
+
+
+<div id="uploadmodel" tabindex="-1"
+    class="fixed top-0  flex left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative white-black  rounded max-h-full" style="    width: 63em; margin-bottom: 0 em;">
+        <div class="relative  white-black rounded-md shadow ">
+            <div class="flex justify-between p-2">
+
+                <span class="text-xl">Upload Content</span>
+                <button type="button"
+                    class="  right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                    data-modal-hide="uploadmodel">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <hr>
+            <br>
+
+
+            <div class=" uplod-type p-6 text-center">
+                <div class="flex justify-between flex-wrap">
+                    <button id="video1"
+                        class="p-4  hover:bg-gray-300 rounded-md bg-gray-200 flex flex-col justify-center items-center content-center"
+                        style="width: 12em; height: 12em;">
+                        <i class=" text-5xl bi bi-cloud-arrow-up-fill"></i>
+
+                        <span class="text-2xl mb-1">Video</span> 
+                    </button>
+                    <input type="file" id="videouploadinput" style="display: none;" accept="video/*">
+
+                    <button id="image"
+                        class="p-4 hover:bg-gray-300 text-2xl mb-3 rounded-md bg-gray-200 flex flex-col justify-center items-center content-center"
+                        style="width: 12em; height: 12em;">
+                        <i class="bi text-5xl bi-card-image"></i>Image</span>
+                    </button>
+                    <button id="text"
+                        class="p-4 hover:bg-gray-300 mb-3 rounded-md bg-gray-200 flex flex-col justify-center items-center content-center"
+                        style="width: 12em; height: 12em;">
+                        <i class="text-5xl bi bi-textarea-t"></i>
+                        <span class="text-2xl mb-1">Text/Blog</span>
+                    </button>
+
+
+                </div>
+                <br><br><br><br>
+                <div class="w-full p-3 flex justify-center content-center items-center text-center">
+
+                    <span class="text-sm">By submiting content make sure it does not interfire with our <a href="#"
+                            class="text-blue-500">Private Policy </a>
+                        data also all content must be appropriate if not penalities will be face upload what's right for
+                        nto
+                        just you but everyone <a href="" class="text-blue-500">Learn more</a></span>
+                </div>
+            </div>
+            <form id="videoform" class="hidden videoform" action="/videoupload" method="post" enctype="multipart/form-data">
+                <div class="p-3 ">
+
+                    <div class="grid gap-6 mb-3 md:grid-cols-2">
+                        <div class="video-content md:grid-cols-3 overflow-y-scroll" style="height: 32em;">
+                            <div> <button type="button" id="returnbtn"><i class="bi text-2xl bi-chevron-left"></i>
+                                </button>
+                                <div class="flex justify-between ">
+                                    <span class="text-2xl font-medium">Details</span>
+                                    <button class="text-blue-500">Template</button>
+                                </div>
+                                <div class="mb-6 ">
+                                    <label for="large-input"
+                                        class="block mb-2 text-sm font-medium text-gray-500 ">Title</label>
+                                    <input name="title" type="text" id="large-input"
+                                        class="block titlevideo w-full p-4 text-gray-900 border border-gray-300 rounded bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <label for="message" class="block mb-2 text-sm font-medium text-gray-500 ">Description
+                                </label>
+                                <textarea name="description" id="message" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                                    placeholder="Write your thoughts here..."></textarea>
+                            </div>
+                            <br><br>
+                            <input class="videoid hidden"  name="videoid"  type="text">
+
+                            <br>
+                            <div class="thumbnail">
+                                <span>Thumbnail</span> <br>
+                                <span class="text-sm text-gray-500">
+                                  Select or upload a picture that shows what's in your video. A good thumbnail stands out and draws viewers' attention.
+                                </span>
+                                <br>
+                                <div>
+                                  <img id="thumbnailPreview" class="w-full rounded" src="" alt="Thumbnail Preview" style="display: none;" />
+                                </div>
+                                <div>
+                                  <label class="w-26 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue">
+                                    <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                      <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                    </svg>
+                                    <span class="mt-2 text-base leading-normal">Select a file</span>
+                                    <input name="thumbnail" type='file' id="thumbnailInput" class="hidden" accept="image/*" />
+                                  </label>
+                                </div>
+                              </div>
+                            <br><br>
+                            <input type="text" name="visabi" id="visa" class="visa ">
+
+                            <div class="visability">
+                                <span class="text-2xl">Visibility</span><br>
+                                <span class="text-sm">Choose when to publish and who can see your video</span>
+                                <div class="border rounded-md p-3">
+                                    <div class="flex">
+                                        <div class="ml-2 text-sm">
+                                            <label for="visibility-select" class="font-medium text-gray-900">Save or publish</label>
+                                            <p id="helper-checkbox-text" class="text-xs font-normal text-gray-500">Make your video public, unlisted, or private</p>
+                                            <div class="flex flex-col p-2">
+                                                <div class="flex flex-col">
+                                                    <label for="visibility-select" class="font-medium text-gray-900">Visibility</label>
+                                                    <select id="visibility-select" name="visibility" class="w-full p-2 border rounded-md text-gray-900 bg-gray-100 border-gray-300">
+                                                      private
+                                                        <option value="private">Private</option>
+                                                        <option value="unlisted">Unlisted</option>
+                                                        <option value="public">Public</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                    
+                            <div>
+                                <span class="text-2xl font-medium">Card Quiz</span><br>
+                                <span class="text-sm text-gray-500">Add cards into your video</span>
+                                <div class="border rounded-md p-3">
+                                    <div class="flex">
+                                        <div class="ml-2 text-sm">
+                                            <label for="visibility-select" class="font-medium text-gray-900">Save or publish</label>
+                                            <p id="helper-checkbox-text" class="text-xs font-normal text-gray-500">Choose one of your quizcard</p>
+                                            <div class="flex flex-col p-2 w-full">
+                                                <div class="flex flex-col w-full">
+            
+                                                    <label for="visibility-select" class="font-medium text-gray-900">Quizcard</label>
+                                                    <select id="visibility-select" name="quizcard" class="w-full p-2 border rounded-md text-gray-900 bg-gray-100 border-gray-300">
+                                                      <% if(currentUser){ %>
+                                                        <%for(let quizcard of currentUser.quizCard){ %>
+                                                            <option value="<%=quizcard._id %>"><%=quizcard.title %></option>
+
+                                                            <% } %>
+                                                          <% } %>
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            <br><br>
+                            <div class="flex justify-between">
+                            <div class="tags">
+                                <span class="text-xl">Tags</span><br>
+                                <span class="text-xs">
+                                    Tags can be useful if content in your video.
+                                </span>
+                                <br>
+                                <div>
+                                    <div>
+                                        <input type="text" id="tag_input"
+                                            class="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                                        <label for="tag_input"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tags</label>
+                                    </div>
+                                    <br>
+                                    <input id="tags-post" class="hidden tags-post" type="text" value="" name="tags">
+                                  
+                                </div>
+                            </div>
+                            <div class="category">
+                                <div>
+
+                                    <label for="category" class="block text-sm font-medium">Categorie</label>
+                                    <br>
+                                    <select name="category" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <option selected="" value="general">General</option>
+                                        <option value="technology">Technology</option>
+                                        <option value="education">Education</option>
+                                        <option value="helth">Health and Fitness
+                                        </option>
+                                        <option value="sports">Sports</option>
+                                        <option value="food">Food and Cooking</option>
+                                        <option value="business">Business and Finance
+                                        </option>
+                                        <option value="art">Arts and Culture
+                                        </option>
+                                    </select>
+        
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="flex justify-center flex-col text-center items-center">
+                            <div>
+                               
+                                      <br>
+                                  <div  id="videoContainer1">
+                                    <div class="video-container1 paused1" data-volume-level="high">
+                                        <img class="thumbnail-img1">
+                                        <div class="video-controls-container1">
+                                          <div class="timeline1-container1">
+                                            <div class="timeline1">
+                                              <img class="preview-img1">
+                                              <div class="thumb-indicator"></div>
+                                            </div>
+                                          </div>
+                                          <div class="controls">
+                                            <button class="play-pause-btn1">
+                                              <svg class="play-icon" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+                                              </svg>
+                                              <svg class="pause-icon" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
+                                              </svg>
+                                            </button>
+                                            <div class="volume-container1">
+                                              <button class="mute-btn1">
+                                                <svg class="volume-high-icon" viewBox="0 0 24 24">
+                                                  <path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
+                                                </svg>
+                                                <svg class="volume-low-icon" viewBox="0 0 24 24">
+                                                  <path fill="currentColor" d="M5,9V15H9L14,20V4L9,9M18.5,12C18.5,10.23 17.5,8.71 16,7.97V16C17.5,15.29 18.5,13.76 18.5,12Z" />
+                                                </svg>
+                                                <svg class="volume-muted-icon" viewBox="0 0 24 24">
+                                                  <path fill="currentColor" d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z" />
+                                                </svg>
+                                              </button>
+                                              <input class="volume-slider1" type="range" min="0" max="1" step="any" value="1">
+                                            </div>
+                                            <div class="duration-container1">
+                                              <div class="current-time1">0:00</div>
+                                              /
+                                              <div class="total-time1"></div>
+                                            </div>
+                                            <button class="captions1-btn1">
+                                              <svg viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M18,11H16.5V10.5H14.5V13.5H16.5V13H18V14A1,1 0 0,1 17,15H14A1,1 0 0,1 13,14V10A1,1 0 0,1 14,9H17A1,1 0 0,1 18,10M11,11H9.5V10.5H7.5V13.5H9.5V13H11V14A1,1 0 0,1 10,15H7A1,1 0 0,1 6,14V10A1,1 0 0,1 7,9H10A1,1 0 0,1 11,10M19,4H5C3.89,4 3,4.89 3,6V18A2,2 0 0,0 5,20H19A2,2 0 0,0 21,18V6C21,4.89 20.1,4 19,4Z" />
+                                              </svg>
+                                            </button>
+                                            <button class="speed-btn1 wide-btn">
+                                              1x
+                                            </button>
+                                            <button class="mini-player-btn1">
+                                              <svg viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-10-7h9v6h-9z"/>
+                                              </svg>
+                                            </button>
+                                            <button class="theater-btn1">
+                                              <svg class="tall" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M19 6H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 10H5V8h14v8z"/>
+                                              </svg>
+                                              <svg class="wide" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z"/>
+                                              </svg>
+                                            </button>
+                                            <button class="full-screen-btn1">
+                                              <svg class="open" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                              </svg>
+                                              <svg class="close" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                                              </svg>
+                                            </button>
+                                          </div>
+                                        </div>
+
+                                        <video playsinline class="videourl videomakepreview" src="url" >
+                                            <track kind="captions1" srclang="en" src="assets/subtitles.vtt">
+                                
+                                          </video>
+                                      </div>
+                                  
+                                  </div>
+                                  
+                                  
+                                <div class="bg-dark pb-3 text-left" >
+                                    <textarea style="overflow: scroll;
+                                    flex-wrap: wrap;
+                                    height: auto;
+                                    border: none;
+                                    cursor: none;
+                                    padding-right: 0.6em;
+                                    max-height: 5em;    
+                                    resize: none;
+                                    width: 100%;" class="text-2xl font-medium flex flex-wrap" id="titlePreview" ></textarea>
+                                  
+     <div style="    margin-left: -0.8em;" class="tags mb-3 flex flex-wrap" id="tags_container">
+        
+    </div>
+                                </div>
+                            </div>
+                          
+                        </div>
+                        <button class="p-4 rounded bg-red-300 hover:bg-red-500 text-white">Upload</button>
+            </form>
+        </div>
+
+
+    </div>
+
+    <form id="imageform" action="/imageupload" class="hidden imageform" method="POST" enctype="multipart/form-data">
+        <button type="button" id="returnimg"><i class="bi text-2xl bi-chevron-left"></i>
+        </button>
+        <div class="p-6 ">
+
+            <div class="flex justify-between ">
+                <span class="text-2xl font-medium">Details</span>
+                <button class="text-blue-500">Template</button>
+            </div>
+            <div class="mb-6 ">
+                <label for="large-input" class="block mb-2 text-sm font-medium text-gray-500 ">Title</label>
+                <input name="title" type="text" id="large-input"
+                    class="block w-full p-4 text-gray-900 border border-gray-300 rounded bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="mb-6 ">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Large file
+                    input</label>
+                    <label for="upload">Choose file</label>
+
+                <input
+                    class="block p-2 w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 "
+                    id="uploadimg" name="image" type="file" >
+                    
+                    
+            </div>
+            <div>
+                <div id="imagePreview"></div>
+
+            </div>
+            <div class="description">
+                <textarea name="description" placeholder="description" class="w-full bg-gray-50 pl-1" id="" cols="30" rows="5"></textarea>
+            </div>
+            <div class="tags">
+                <span class="text-xl">Categorie</span><br>
+                <span class="text-xs">
+                    Categorie can be useful if content in your Image.
+                </span>
+                <br>
+                <select name="category" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option selected="" value="general">General</option>
+                    <option value="technology">Technology</option>
+                    <option value="education">Education</option>
+                    <option value="helth">Health and Fitness
+                    </option>
+                    <option value="sports">Sports</option>
+                    <option value="food">Food and Cooking</option>
+                    <option value="business">Business and Finance
+                    </option>
+                    <option value="art">Arts and Culture
+                    </option>
+                </select>
+            </div>
+            <br>
+            <button type="submit" class="p-4 w-full rounded bg-red-300 hover:bg-red-500 text-white">Upload</button>
+
+        </div>
+    </form>
+
+    <form id="textform" action="textform" class="hidden ml-5 mr-5 imageform" method="post">
+        <button type="button" id="returntext"><i class="bi text-2xl bi-chevron-left"></i>
+        </button>
+        <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+            <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
+                <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
+                    <div class="flex items-center space-x-1 sm:pr-4">
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Attach file</span>
+                        </button>
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Embed map</span>
+                        </button>
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Upload image</span>
+                        </button>
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Format code</span>
+                        </button>
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Add emoji</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Add list</span>
+                        </button>
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Settings</span>
+                        </button>
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Timeline</span>
+                        </button>
+                        <button type="button"
+                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Download</span>
+                        </button>
+                    </div>
+                </div>
+                <button type="button" data-tooltip-target="tooltip-fullscreen"
+                    class="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Full screen</span>
+                </button>
+                <div id="tooltip-fullscreen" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Show full screen
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </div>
+            <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+                <label for="editor" class="sr-only">Publish post</label>
+                <textarea id="editor" rows="8"
+                    class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                    placeholder="Write an article..." required></textarea>
+            </div>
+        </div>
+        <div class="tags">
+            <span class="text-xl">Tags</span><br>
+            <span class="text-xs">
+                Tags can be useful if content in your video.
+            </span>
+            <br>
+            <div>
+                <div>
+                    <input type="text" id="tag_input"
+                        class="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+                    <label for="tag_input"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tags</label>
+                </div>
+                <br>
+                <input id="tags-post" class="hidden tags-post" type="text" value="dff,34f,2sf,2323fdwsf" name="tags">
+            <div class="tags flex flex-wrap" id="tags_container">
+                    <span value="student"
+                        class="text-xs ml-3 mb-2 font-semibold inline-block py-1 px-2 uppercase rounded text-cyan-600 bg-cyan-200 uppercase last:mr-0 mr-1">
+                        computer
+                    </span>
+                    <span
+                        class="text-xs mb-2 font-semibold inline-block py-1 px-2 uppercase rounded text-slate-600 bg-slate-200 uppercase last:mr-0 mr-1">
+                        student
+                    </span>
+                </div>
+            </div>
+        </div>
+        <button type="submit"
+            class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+            Publish post
+        </button>
+    </form>
+
+</div>
+</div>
+</div>
+
+<!-- Option 1: Include in HTML -->
+<link rel=" stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+ const fileopenup = document.getElementById('video1');
+const videoinput = document.getElementById('videouploadinput');
+
+fileopenup.addEventListener('click', function(e){
+    e.preventDefault();
+    console.log('click')
+    console.log(videoinput)
+
+    videoinput.click(); // This will programmatically click the file input
+});
+
+
+
+     // Get the input field and preview element
+  const input = document.getElementById('large-input');
+  const preview = document.getElementById('titlePreview');
+  const textarea = document.getElementById('message');
+  const textpreview = document.getElementById('descriptionPreview');
+  const fileInput = document.getElementById('uploadimg');
+  const imagePreviewContainer = document.getElementById('imagePreview');
+
+  // Add a change event listener to the file input
+  fileInput.addEventListener('change', function(event) {
+    // Remove any existing preview image
+    imagePreviewContainer.innerHTML = '';
+
+    // Get the selected file
+    const file = event.target.files[0];
+
+    // Create a FileReader to read the file
+    const reader = new FileReader();
+
+    // Set up the FileReader onload event
+    reader.onload = function(e) {
+      // Create an <img> element
+      const imgElement = document.createElement('img');
+      imgElement.src = e.target.result;
+
+      // Append the <img> element to the image preview container
+      imagePreviewContainer.appendChild(imgElement);
+    };
+
+    // Read the selected file as a data URL
+    reader.readAsDataURL(file);
+  });
+
+  // Add an input event listener to the textarea
+  textarea.addEventListener('input', function(event) {
+    // Update the preview element with the entered text
+    textpreview.textContent = event.target.value;
+  });
+  // Add an input event listener to the input field
+  input.addEventListener('input', function(event) {
+    // Update the preview element with the entered text
+    preview.textContent = event.target.value;
+  });
+    // Add event listener to the thumbnail file input
+
+
+
+  const videoform = document.getElementById('videoform')
+
+  
+    const videobtn = document.getElementById('video')
+
+    const imagebtn = document.getElementById('image')
+    const textbtn = document.getElementById('text')
+    const returnbtn = document.getElementById('returnbtn')
+    const returnimg = document.getElementById('returnimg')
+    const returntext = document.getElementById('returntext')
+
+    const uploadform = document.querySelector('.uplod-type')
+    const imageform = document.getElementById('imageform')
+    const textform = document.getElementById('textform')
+
+
+    textbtn.addEventListener('click', (req, res) => {
+        textform.classList.remove('hidden')
+        uploadform.classList.toggle('hidden')
+    })
+    returntext.addEventListener('click', (req, res) => {
+        textform.classList.toggle('hidden')
+        uploadform.classList.remove('hidden')
+    })
+
+    returnimg.addEventListener('click', (req, res) => {
+        imageform.classList.toggle('hidden')
+        uploadform.classList.remove('hidden')
+    })
+    imagebtn.addEventListener('click', (req, res) => {
+        imageform.classList.remove('hidden')
+        uploadform.classList.toggle('hidden')
+    })
+    // videobtn.addEventListener('click', (req, res) => {
+    //     videoform.classList.remove('hidden')
+    //     uploadform.classList.toggle('hidden')
+    // })
+    returnbtn.addEventListener('click', (req, res) => {
+        videoform.classList.toggle('hidden')
+        uploadform.classList.remove('hidden')
+    })
+    const tagInput = document.getElementById('tag_input');
+    const tagsContainer = document.getElementById('tags_container');
+    const inputElement = document.getElementById("tags-post");
+    const values = inputElement.value.split(",");
+
+    function getRandomColor() {
+        const colors = ['bg-red-200', 'bg-blue-200', 'bg-green-200', 'bg-yellow-200', 'bg-purple-200'];
+        const randomIndex = Math.floor(Math.random() * colors.length);
+        return colors[randomIndex];
+    }
+
+    tagInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const tag = tagInput.value.trim();
+            console.log('')
+            if (tag !== '') {
+                const tagElement = document.createElement('span');
+                const randomColor = getRandomColor();
+                tagElement.classList.add(
+                    'text-xs',
+                    'ml-3',
+                    'font-semibold',
+                    'inline-block',
+                    'mb-2',
+                    'py-1',
+                    'px-2',
+                    'uppercase',
+                    'rounded',
+                    'text-gray-600',
+                    randomColor,
+                    'uppercase',
+                    'last:mr-0',
+                    'mr-1'
+                );
+                tagElement.innerText = tag;
+                // Push the string "d" to the array.
+                values.push(tag);
+                console.log(values)
+
+                // Set the value of the input element to the new array.
+                inputElement.value = values.join(",");
+                tagElement.setAttribute('name', 'tags'); // Add name attribute to the tag element
+                tagsContainer.appendChild(tagElement);
+
+                tagInput.value = '';
+            }
+        }
+    });
+
+    tagsContainer.addEventListener('click', function (event) {
+        if (event.target.classList.contains('tag-remove')) {
+            event.target.parentNode.remove();
+        }
+    });
+    $(document).ready(function () {
+        // Get the current URL path
+        var path = window.location.pathname;
+        var student = $('.student-nav')
+        var home = $('.home')
+        var reminder = $('.reminder')
+        var calendar = $('.calendar')
+        var quizit = $('.project')
+        var course = $('.course')
+        var discover = $('.discover')
+        console.log(home)
+
+        // Find the corresponding navlink and add the 'active' class
+        $('.nav-link').each(function () {
+            var href = $(this).attr('href');
+            if (path === href) {
+                $(this).addClass('navactive');
+                $(this).find('i').addClass('bi-fill');
+            }
+            if (path === '/home') {
+
+                home.find('i').removeClass('bi-grid-1x2')
+                home.find('i').addClass('bi-grid-1x2-fill')
+            }
+            if (path === '/home/board') {
+                bord.find('i').removeClass('bi-kanban')
+                bord.find('i').addClass('bi-kanban-fill')
+            }
+            if (path === '/home/calendar') {
+                calendar.find('i').removeClass('bi-calendar')
+                calendar.find('i').addClass('bi-calendar-fill')
+            }
+            if (path === '/home/project') {
+                quizit.find('i').removeClass('bi-journal-bookmark')
+                quizit.find('i').addClass('bi-journal-bookmark-fill')
+            }
+
+            if (path === '/home/course') {
+                course.find('i').removeClass('bi-bookmark-star')
+                course.find('i').addClass('bi-bookmark-star-fill')
+            }
+            if (path === '/home/discover') {
+                discover.find('i').removeClass('bi-globe')
+                discover.find('i').addClass('bi-globe')
+            }
+            if (path.includes('student')) {
+                student.addClass('navactive');
+                discover.find('i').removeClass('bi-person')
+                student.find('i').addClass('bi-person-fill');
+            }
+            if (path.includes('quiz')) {
+                discover.addClass('navactive');
+
+            }
+            if (path.includes('reminder')) {
+                reminder.addClass('navactive');
+
+
+            }
+        });
+    });
+
+
+    let titlevideo = document.querySelector('.titlevideo')
+
+    videoinput.addEventListener('change', function() {
+    // Access the selected file using `this.files[0]`
+    const selectedFile = this.files[0];
+
+    // Create a FormData object to send the file
+    const formData = new FormData();
+    formData.append('video', selectedFile);
+
+    // Send the POST request with the FormData
+    const cloudupload = document.querySelector('.bi-cloud-arrow-up-fill')
+    cloudupload.classList.add('loader')
+    fetch(`/video/upload/new`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .catch(error => {
+        // Handle error
+        console.error('Error uploading file:', error);
+    })
+    .then(data => {
+        // Handle success
+        console.log('Upload successful:', data);
+        videoform.classList.remove('hidden')
+        uploadform.classList.toggle('hidden')
+        const videoid = document.querySelector('.videoid')
+        let videoElement = document.querySelector('.videourl');
+
+        videoElement.src = data.videopost.VideoUrl
+        titlevideo = data.videopost.title
+        videoid.value = data.videopost._id
+            cloudupload.classList.remove('loader')
+
+        console.log(videoid)
+        console.log(data)
+        console.log(data.videopost)
+
+
+
+
+    })
+   
+});
+
+//video play
+
+const playPauseBtn1 = document.querySelector(".play-pause-btn1")
+const theaterBtn1 = document.querySelector(".theater-btn1")
+const fullScreenBtn1 = document.querySelector(".full-screen-btn1")
+const miniPlayerBtn1 = document.querySelector(".mini-player-btn1")
+const muteBtn1 = document.querySelector(".mute-btn1")
+const captions1Btn1 = document.querySelector(".captions1-btn1")
+const speedBtn1 = document.querySelector(".speed-btn1")
+const currentTimeElem1 = document.querySelector(".current-time1")
+const totalTimeElem1 = document.querySelector(".total-time1")
+const previewImg1 = document.querySelector(".preview-img1")
+const thumbnailImg1 = document.querySelector(".thumbnail-img1")
+const volumeSlider1 = document.querySelector(".volume-slider1")
+const videoContainer1 = document.querySelector(".video-container1")
+const timeline1Container1 = document.querySelector(".timeline1-container1")
+const video1 = document.querySelector(".videomakepreview")
+
+document.addEventListener("keydown", e => {
+  const tagName = document.activeElement.tagName.toLowerCase()
+
+  if (tagName === "input") return
+
+  switch (e.key.toLowerCase()) {
+    case " ":
+      if (tagName === "button") return
+    case "k":
+      togglePlay()
+      break
+    case "f":
+      toggleFullScreenMode()
+      break
+    case "t":
+      toggleTheaterMode()
+      break
+    case "i":
+      toggleMiniPlayerMode()
+      break
+    case "m":
+      toggleMute()
+      break
+    case "arrowleft":
+    case "j":
+      skip(-5)
+      break
+    case "arrowright":
+    case "l":
+      skip(5)
+      break
+    case "c":
+      toggleCaptions()
+      break
+  }
+})
+
+// Timeline
+timeline1Container1.addEventListener("mousemove", handleTimelineUpdate)
+timeline1Container1.addEventListener("mousedown", toggleScrubbing)
+document.addEventListener("mouseup", e => {
+  if (isScrubbing1) toggleScrubbing(e)
+})
+document.addEventListener("mousemove", e => {
+  if (isScrubbing1) handleTimelineUpdate(e)
+})
+
+let isScrubbing1 = false
+let wasPaused1
+function toggleScrubbing(e) {
+  const rect = timeline1Container1.getBoundingClientRect()
+  const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
+  isScrubbing1 = (e.buttons & 1) === 1
+  videoContainer1.classList.toggle("scrubbing", isScrubbing1)
+  if (isScrubbing1) {
+    wasPaused1 = video1.paused1
+    video1.pause()
+  } else {
+    video1.currentTime = percent * video1.duration
+    if (!wasPaused1) video1.play()
+  }
+
+  handleTimelineUpdate(e)
+}
+
+function handleTimelineUpdate(e) {
+  const rect = timeline1Container1.getBoundingClientRect()
+  const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width
+  const previewImg1Number = Math.max(
+    1,
+    Math.floor((percent * video1.duration) / 10)
+  )
+  const previewImg1Src = `assets/previewImg1s/preview${previewImg1Number}.jpg`
+  previewImg1.src = previewImg1Src
+  timeline1Container1.style.setProperty("--preview-position", percent)
+
+  if (isScrubbing1) {
+    e.preventDefault()
+    thumbnailImg1.src = previewImg1Src
+    timeline1Container1.style.setProperty("--progress-position", percent)
+  }
+}
+
+// Playback Speed
+speedBtn1.addEventListener("click", changePlaybackSpeed)
+
+function changePlaybackSpeed() {
+  let newPlaybackRate = video1.playbackRate + 0.25
+  if (newPlaybackRate > 2) newPlaybackRate = 0.25
+  video1.playbackRate = newPlaybackRate
+  speedBtn1.textContent = `${newPlaybackRate}x`
+}
+
+// Captions
+const captions1 = video1.textTracks[0]
+captions1.mode = "hidden"
+
+captions1Btn1.addEventListener("click", toggleCaptions)
+
+function toggleCaptions() {
+  const isHidden = captions1.mode === "hidden"
+  captions1.mode = isHidden ? "showing" : "hidden"
+  videoContainer1.classList.toggle("captions1", isHidden)
+}
+
+// Duration
+video1.addEventListener("loadeddata", () => {
+  totalTimeElem1.textContent = formatDuration(video1.duration)
+})
+
+video1.addEventListener("timeupdate", () => {
+  currentTimeElem1.textContent = formatDuration(video1.currentTime)
+  const percent = video1.currentTime / video1.duration
+  timeline1Container1.style.setProperty("--progress-position", percent)
+})
+
+const leadingZeroFormatter1 = new Intl.NumberFormat(undefined, {
+  minimumIntegerDigits: 2,
+})
+function formatDuration(time) {
+  const seconds = Math.floor(time % 60)
+  const minutes = Math.floor(time / 60) % 60
+  const hours = Math.floor(time / 3600)
+  if (hours === 0) {
+    return `${minutes}:${leadingZeroFormatter1.format(seconds)}`
+  } else {
+    return `${hours}:${leadingZeroFormatter1.format(
+      minutes
+    )}:${leadingZeroFormatter1.format(seconds)}`
+  }
+}
+
+function skip(duration) {
+  video1.currentTime += duration
+}
+
+// Volume
+muteBtn1.addEventListener("click", toggleMute)
+volumeSlider1.addEventListener("input", e => {
+  video1.volume = e.target.value
+  video1.muted = e.target.value === 0
+})
+
+function toggleMute() {
+  video1.muted = !video1.muted
+}
+
+video1.addEventListener("volumechange", () => {
+  volumeSlider1.value = video1.volume
+  let volumeLevel
+  if (video1.muted || video1.volume === 0) {
+    volumeSlider1.value = 0
+    volumeLevel = "muted"
+  } else if (video1.volume >= 0.5) {
+    volumeLevel = "high"
+  } else {
+    volumeLevel = "low"
+  }
+
+  videoContainer1.dataset.volumeLevel = volumeLevel
+})
+
+// View Modes
+theaterBtn1.addEventListener("click", toggleTheaterMode)
+fullScreenBtn1.addEventListener("click", toggleFullScreenMode)
+miniPlayerBtn1.addEventListener("click", toggleMiniPlayerMode)
+
+function toggleTheaterMode() {
+  const reco2  = document.querySelector('.reco2');
+  const videow = document.querySelector('.videow');
+  videow.classList.toggle('fullwidth');
+  reco2.classList.toggle('theathorfull');
+  videoContainer1.classList.toggle("theater")
+}
+
+function toggleFullScreenMode() {
+  if (document.fullscreenElement == null) {
+    videoContainer1.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
+}
+
+function toggleMiniPlayerMode() {
+  if (videoContainer1.classList.contains("mini-player")) {
+    document.exitPictureInPicture()
+  } else {
+    video1.requestPictureInPicture()
+  }
+}
+
+document.addEventListener("fullscreenchange", () => {
+  videoContainer1.classList.toggle("full-screen", document.fullscreenElement)
+})
+
+video1.addEventListener("enterpictureinpicture", () => {
+  videoContainer1.classList.add("mini-player")
+})
+
+video1.addEventListener("leavepictureinpicture", () => {
+  videoContainer1.classList.remove("mini-player")
+})
+
+// Play/Pause
+playPauseBtn1.addEventListener("click", togglePlay)
+video1.addEventListener("click", togglePlay)
+
+function togglePlay() {
+  video1.paused1 ? video1.play() : video1.pause()
+}
+
+video1.addEventListener("play", () => {
+  videoContainer1.classList.remove("paused1")
+})
+
+video1.addEventListener("pause", () => {
+  videoContainer1.classList.add("paused1")
+})
+
+</script>

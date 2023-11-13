@@ -1,0 +1,26 @@
+<% if(success && success.length) {%>
+    <div class="px-4 py-2 text-sm text-green-800 bg-green-50 dark:bg-gray-800 dark:text-green-400 rounded-lg"
+        style="margin-left: 18em; margin-right: 2em;">
+        <span class="font-medium">
+            <%= success %>
+        </span>
+    </div>
+    <% } %>
+
+        <% if(error && error.length) {%>
+            <div class="px-4 py-2 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 rounded-lg"
+                style="margin-left: 18em; margin-right: 2em;">
+                <span class="font-medium">
+                    <%= error %>
+                </span>
+            </div>
+            <% } %>
+
+                <% if(warning && warning.length) {%>
+                    <div class="px-4 py-2 text-sm text-yellow-700 bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 rounded-lg"
+                        style="margin-left: 18em; margin-right: 2em;">
+                        <span class="font-medium">
+                            <%= warning %>
+                        </span>
+                    </div>
+                    <% } %>

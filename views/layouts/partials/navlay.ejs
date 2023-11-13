@@ -1,0 +1,227 @@
+<style>
+   
+    .mobileimg{
+         display: none;
+     }
+     .dkimg{
+         display: flex;
+     }
+     @media only screen and (max-width: 600px) {
+ 
+     .search-form{
+         display: none;
+     }
+     .mobileimg{
+         display: flex;
+     }
+     .dkimg{
+         display: none;
+     }
+   
+ }
+ 
+ </style>
+ <nav class=" top-nav bg-theme-transparent ">
+     <div class="mobilesearch hidden flex p-3 ml-2 mr-2">
+         <button class="seefullnav navitemscontent">
+             <i class="bi text-2xl font-bold bi-chevron-left"></i>
+ 
+         </button>
+         <input type="text" placeholder="Search Something" class="w-full p-3 rounded-md  bg-gray-100" name="" id="">
+       </div>
+ 
+     <div class=" navfull flex mt-1 flex-wrap items-center justify-between ml-2 mr- p-2">
+         <div class="flex ">
+             <a href="/home" class="imagebuttom w-10 h-10 mobileimg ">
+                 <img src="/imgs/home/mini-gukari.png" id="iconlogo" class="icon-logo-resize logo-icon " style="    width: 153px;
+                 " />
+             </a>     
+ 
+         <a href="/home" class="imagebuttom dkimg ">
+             <img src="/imgs/home/logo.png" id="iconlogo" class="icon-logo-resize logo-icon " style="    width: 153px;
+             " />
+ 
+         </a>     
+         <div class="ml-6 flex">
+ 
+         <button id="fullscreentab" class="">
+             <i class="bi text-2xl bi-window"></i>
+         </button>
+         
+         <div class="tabheading ml-5  flex-col">
+             
+             <span class="bg-gray-150 font-medium text-md">👋 Hello </span>
+             <span class="text-md font-bold ">Here is our & more</span>
+         </div>
+       </div>
+     </div>
+ 
+     
+         <div id="search-form" style=" width: 50%; margin-left: -1em;" class="">
+             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+             <div class="relative bg-transparent">
+                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                     <svg aria-hidden="true" class="w-5 h-5   text-gray-500 " fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                     </svg>
+                 </div>
+                 <input type="search" id="default-search"
+                     class="block w-full p-4 pl-10 text-sm text-gray-900 shaodw border-gray-300 rounded-lg   " style="background-color: var(--navblack);"
+                     placeholder="Search" required>
+ 
+             </div>
+             <div class="bg-gray-200 rounded-lg mt-2 mb-2 absolute hidden navclass" id="navclass " style="width: 50%; min-height: 2em; z-index: 99999;">
+                 
+             </div>
+         </div>
+       
+         <div class="flex items-center justify-between md:order-2  w-32">
+             <button class="" id="theme">
+                 <i id="togglechange" class="bi text-xl bi-moon"></i>
+ 
+             </button>
+             
+             <button class="ml-1 mr-1 searchbutton">
+                 <i class="bi bi-search"></i>
+ 
+             </button>
+             
+             <button>
+                 <i class="bi text-xl bi-bell"></i>
+             </button>
+ 
+             <% if(currentUser){ %>
+             <button type="button"
+                 class="flex mr-3 text-sm  rounded-full md:mr-0 focus:ring-2 focus:ring-<%= currentUser.profilecolor%>-600 "
+                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                 data-dropdown-placement="bottom">
+                 <span class="sr-only">Open user menu</span>
+                 <%if(!currentUser.photourl && currentUser !== ''  ){%>
+                     <% const firstLetter = currentUser.username.charAt(0); %>
+ 
+                     <span class="w-10 h-10 text-center bg-<%= currentUser.profilecolor%>-500 rounded-full text-white font-medium  text-md flex justify-center items-center"><%=firstLetter %></span>
+ 
+                 <%}else{%>
+                     <img class="w-8 h-8 rounded-full" src="<%=currentUser.photourl%>" alt="user photo">
+ 
+                 <%}%>
+             </button>
+           
+ 
+ 
+             <!-- Dropdown menu -->
+             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow "
+                 id="user-dropdown">
+                 <div class="px-4 py-3">
+                     <span class="block text-sm text-gray-900">
+                         <!-- username -->
+                         <%=currentUser.username%>
+                         
+                     </span>
+                     <span class="block text-sm  text-gray-500 truncate ">
+                         <!-- /email -->
+                         <%=currentUser.email%>
+                     </span>
+                 </div>
+                 <ul class="py-2" aria-labelledby="user-menu-button">
+                     <li>
+                         <a href="/home/profile/<%=currentUser._id%>"
+                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Profile</a>
+                     </li>
+                     <li>
+                         <a href="/settings"
+                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Settings</a>
+                     </li>
+                     <li>
+                         <a href="/home" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Dashboard</a>
+                     </li>
+                     <li>
+                         <a href="/logout"
+                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  dark:hover:text-white">Log out</a>
+                     </li>
+                 </ul>
+             </div>
+             <%} %>
+         </div>
+ 
+ 
+ 
+     </div>
+ </nav>
+ <script>
+     const searchbutton = document.querySelector('.searchbutton')
+     const navfull = document.querySelector('.navfull')
+     const navitemscontent = document.querySelector('.navitemscontent')
+     const mobilesearch  =  document.querySelector('.mobilesearch')
+ 
+     navitemscontent.addEventListener('click', () => {
+         navfull.classList.remove('hidden')
+         mobilesearch.classList.add('hidden')
+     })
+     searchbutton.addEventListener('click', () => {
+         navfull.classList.add('hidden')
+         
+         mobilesearch.classList.remove('hidden')
+     })
+     const defaultsearch = document.getElementById('default-search')
+ const navclass = document.querySelector('.navclass')
+ defaultsearch.addEventListener('blur', function () {
+     navclass.classList.add('hidden');
+ });
+ defaultsearch.addEventListener('keydown', async function (e) {
+     console.log(e)
+     const searchTerm = defaultsearch.value.trim();
+      //if i press enter key
+      if (e.key === 'Enter' || e.key === 'Return') { // Check if the key pressed is Enter or Return
+         e.preventDefault(); // Prevent the default form submission
+         window.location.href = `/home/results/search_query/${searchTerm}`;
+     }
+     navclass.innerHTML = '';
+ 
+     if (searchTerm === '') {
+         navclass.classList.add('hidden');
+         return;
+     }
+     // Use 'Enter' to detect the Enter key press    
+ 
+    
+   
+ 
+     try {
+         
+         const response = await fetch(`/search?term=${searchTerm}`);
+ 
+         if (!response.ok) {
+             throw new Error('Network response was not ok');
+         }
+        
+         const data = await response.json();
+ 
+         const resultsList = document.createElement('ul');
+         data.forEach((item) => {
+             const li = document.createElement('li');
+             li.textContent = item.title;
+             li.classList.add('px-4', 'py-2', 'text-sm', 'text-gray-700', 'hover:bg-gray-100','cursor-pointer');
+             li.addEventListener('click', () => {
+                 window.location.href = `/home/results/search_query/${item.title}`;
+             });
+ 
+             resultsList.appendChild(li);
+ 
+         });
+ 
+         navclass.appendChild(resultsList);
+         navclass.classList.remove('hidden');
+           // Use 'Enter' to detect the Enter key press
+           console.log('Enter key pressed');
+     
+     } catch (error) {
+         console.error('Error fetching data:', error);
+     }
+ });
+ 
+ </script>
+ 
+ <script src="/public/javascript/main.js"></script>
