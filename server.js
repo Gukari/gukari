@@ -48,8 +48,7 @@ const sessionConfig = {
     touchAfter: 1024 * 3600, // time period in seconds
   }),
 };
-mongoose
-  .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
   .then(() => {
     console.log("open");
